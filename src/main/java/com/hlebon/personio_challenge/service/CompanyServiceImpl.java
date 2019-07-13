@@ -1,11 +1,14 @@
 package com.hlebon.personio_challenge.service;
 
 import com.hlebon.personio_challenge.repository.MemberDao;
+import com.hlebon.personio_challenge.repository.entity.ConnectionEntity;
 import com.hlebon.personio_challenge.repository.entity.MemberEntity;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -28,6 +31,20 @@ public class CompanyServiceImpl implements CompanyService {
         saveAllMembers(company.getAllMembers());
         saveConnections(root);
         return root;
+    }
+
+    @Override
+    public List<Member> getHierarchyByName(String name) {
+        List<Member> result = new LinkedList<>();
+        ConnectionEntity currentConnection = memberDao.getConnectionByEmployeeName(name);
+        while (currentConnection != null) {
+            MemberEntity supervisorEntity = currentConnection.getSupervisor();
+            Member supervisor = new Member(supervisorEntity.getName());
+            result.add(supervisor);
+            currentConnection = memberDao.getConnectionByEmployeeName(supervisorEntity.getName());
+
+        }
+        return result;
     }
 
     private void saveAllMembers(Collection<Member> allMembers) {

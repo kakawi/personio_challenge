@@ -11,6 +11,9 @@ create unique index members_name_uindex
 
 create table company
 (
+    id serial       not null
+        constraint company_pk
+            primary key,
     supervisor_id int,
     employee_id int constraint employee_u unique
 );
