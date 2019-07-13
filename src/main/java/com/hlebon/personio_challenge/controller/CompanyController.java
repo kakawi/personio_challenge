@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController("/")
 public class CompanyController {
@@ -58,10 +56,24 @@ public class CompanyController {
         }
     }
 
-    @GetMapping(value = "getHierarchy")
+    @GetMapping(value = "getHierarchy", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getHierarchy(@RequestParam String name) {
-        List<Member> chainOfSupervisors = companyService.getHierarchyByName(name);
-        return chainOfSupervisors.stream().map(Member::getName).collect(Collectors.joining(" -> "));
+        Member firstSupervisor = companyService.getHierarchyByName(name);
+        if (firstSupervisor == null) {
+            return EMPTY_OBJECT.toString();
+        }
+
+        JsonObject result = new JsonObject();
+        Member currentSupervisor = firstSupervisor;
+        result.add(currentSupervisor.getName(), EMPTY_OBJECT);
+        while (currentSupervisor.getSupervisor() != null) {
+            Member supervisor = currentSupervisor.getSupervisor();
+            JsonObject newJsonObject = new JsonObject();
+            newJsonObject.add(supervisor.getName(), result);
+            result = newJsonObject;
+            currentSupervisor = supervisor;
+        }
+        return result.toString();
     }
 
     private String generateJson(Member root) {
