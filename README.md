@@ -4,15 +4,19 @@
 3. Before save new hierarchy we clear the whole database
 
 # Build application
+```
 ./gradlew bootJar
+```
 
 # Start Docker (database)
 ```
-docker-compose up -f docker/docker-compose.yml
+docker-compose -f docker/docker-compose.yml up
 ```
 
 # Start Application
+```
 java -jar ./build/libs/personio_challenge.jar
+```
 
 # Make requests
 ## Save hierarchy of the company
