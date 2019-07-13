@@ -19,6 +19,12 @@ java -jar ./build/libs/personio_challenge.jar
 ```
 
 # Make requests
+## Security
+To invoke any endpoint please pass **Basic Authentication**
+
+login: **admin**  
+password: **admin**
+
 ## Save hierarchy of the company
 **POST** request on endpoint **http://localhost:8080/saveHierarchy**
 example body
