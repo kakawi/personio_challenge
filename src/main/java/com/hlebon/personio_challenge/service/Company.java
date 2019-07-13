@@ -42,17 +42,36 @@ public class Company {
                 // loop checking
                 loopValidation(existedEmployee, existedSupervisor);
                 existedEmployee.setSupervisor(existedSupervisor);
+                existedSupervisor.addEmployee(existedEmployee);
                 return;
             }
             existedEmployee.setSupervisor(supervisor);
+            supervisor.addEmployee(existedEmployee);
             return;
         }
         // everything OK
         if (existedSupervisor == null) {
             employee.setSupervisor(supervisor);
+            supervisor.addEmployee(employee);
             return;
         }
         employee.setSupervisor(existedSupervisor);
+        existedSupervisor.addEmployee(employee);
+    }
+
+    public Member getRoot() throws ServiceException {
+        Member result = null;
+        for (Member currentMember : allMembers) {
+            if (currentMember.getSupervisor() == null) {
+                if (result == null) {
+                    result = currentMember;
+                } else {
+                    String message = "There're at least two roots %s and %s";
+                    throw new ServiceException(String.format(message, result, currentMember));
+                }
+            }
+        }
+        return result;
     }
 
     private void loopValidation(Member existedEmployee, Member existedSupervisor) throws ServiceException {

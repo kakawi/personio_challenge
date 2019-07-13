@@ -3,6 +3,8 @@ package com.hlebon.personio_challenge.service;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Objects;
 
 @Getter
@@ -13,11 +15,17 @@ public class Member {
 
     private Member supervisor;
 
+    private Collection<Member> employees = new LinkedList<>();
+
     public Member(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name can't be null");
         }
         this.name = name;
+    }
+
+    public void addEmployee(Member employee) {
+        employees.add(employee);
     }
 
     @Override
