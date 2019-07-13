@@ -39,3 +39,8 @@ example body
 
 ## Get supervisors for Pete
 **GET** request on endpoint **http://localhost:8080/getHierarchy?name=Pete**
+
+## Run tests
+```
+./gradlew test
+```
