@@ -15,7 +15,7 @@ public class CompanyTest {
         company.unitMembers(employee, supervisor);
     }
 
-    @Test(expected = SecurityException.class)
+    @Test(expected = ServiceException.class)
     public void unitMembers_loop() throws Exception {
         Company company = new Company();
         Member member1 = new Member("member1");
@@ -32,7 +32,7 @@ public class CompanyTest {
         throw new Exception("write a test");
     }
 
-    @Test(expected = SecurityException.class)
+    @Test(expected = ServiceException.class)
     public void unitMembers_twoRoots() throws Exception {
         Company company = new Company();
         Member employee = new Member("employee");
