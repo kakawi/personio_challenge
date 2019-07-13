@@ -6,7 +6,6 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.hlebon'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -29,4 +28,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootJar {
+    mainClassName = "com.hlebon.personio_challenge.PersonioChallengeApplication"
 }
