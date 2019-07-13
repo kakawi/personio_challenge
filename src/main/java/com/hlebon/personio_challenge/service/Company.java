@@ -74,6 +74,10 @@ public class Company {
         return result;
     }
 
+    public Collection<Member> getAllMembers() {
+        return allMembers;
+    }
+
     private void loopValidation(Member existedEmployee, Member existedSupervisor) throws ServiceException {
         Collection<Member> memberHierarchy = new LinkedList<>();
         memberHierarchy.add(existedSupervisor);
