@@ -20,7 +20,7 @@ java -jar ./build/libs/personio_challenge.jar
 
 # Make requests
 ## Save hierarchy of the company
-POST request on endpoint http://localhost:8080/saveHierarchy
+**POST** request on endpoint **http://localhost:8080/saveHierarchy**
 example body
 ```
 {
@@ -32,4 +32,4 @@ example body
 ```
 
 ## Get supervisors for Pete
-GET request on endpoint http://localhost:8080/getHierarchy?name=Pete
+**GET** request on endpoint **http://localhost:8080/getHierarchy?name=Pete**
