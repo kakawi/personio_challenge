@@ -75,16 +75,17 @@ public class Company {
     }
 
     private void loopValidation(Member existedEmployee, Member existedSupervisor) throws ServiceException {
-        Collection<Member> supervisors = new LinkedList<>();
-        while (existedSupervisor.getSupervisor() != null) {
-            Member supervisorOfSupervisor = existedSupervisor.getSupervisor();
-            supervisors.add(supervisorOfSupervisor);
-            if (supervisorOfSupervisor.equals(existedEmployee)) {
-                supervisors.add(existedEmployee);
-                String loop = supervisors.stream().map(Member::getName).collect(Collectors.joining(" -> "));
+        Collection<Member> memberHierarchy = new LinkedList<>();
+        memberHierarchy.add(existedSupervisor);
+        Member currentSuperVisorOfSupervisor = existedSupervisor.getSupervisor();
+        while (currentSuperVisorOfSupervisor != null) {
+            memberHierarchy.add(currentSuperVisorOfSupervisor);
+            if (currentSuperVisorOfSupervisor.equals(existedEmployee)) {
+                memberHierarchy.add(existedSupervisor);
+                String loop = memberHierarchy.stream().map(Member::getName).collect(Collectors.joining(" -> "));
                 throw new ServiceException("Loop of supervisors " + loop);
             }
-            existedSupervisor = supervisorOfSupervisor;
+            currentSuperVisorOfSupervisor = currentSuperVisorOfSupervisor.getSupervisor();
         }
     }
 

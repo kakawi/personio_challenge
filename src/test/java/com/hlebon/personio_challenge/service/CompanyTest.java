@@ -23,14 +23,27 @@ public class CompanyTest {
     }
 
     @Test(expected = ServiceException.class)
+    /*
+     * {
+     * 	"Pete": "Nick",
+     * 	"Barbara": "Nick",
+     * 	"Nick": "Sophie",
+     * 	"Sophie": "Jonas",
+     * 	"Johas": "Pete"
+     * }
+     */
     public void unitMembers_loop() throws Exception {
         Company company = new Company();
-        Member member1 = new Member("member1");
-        Member member2 = new Member("member2");
-        Member member3 = new Member("member3");
-        company.unitMembers(member1, member2);
-        company.unitMembers(member2, member3);
-        company.unitMembers(member3, member1);
+        Member pete = new Member("Pete");
+        Member nick = new Member("Nick");
+        Member barbara = new Member("Barbara");
+        Member sophie = new Member("Sophie");
+        Member johas = new Member("Johas");
+        company.unitMembers(pete, nick);
+        company.unitMembers(barbara, nick);
+        company.unitMembers(nick, sophie);
+        company.unitMembers(sophie, johas);
+        company.unitMembers(johas, pete);
     }
 
     @Test(expected = ServiceException.class)
