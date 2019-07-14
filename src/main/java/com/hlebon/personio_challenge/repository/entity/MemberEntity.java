@@ -8,12 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "members")
+@Table(name = "member")
 @Getter
 @Setter
 public class MemberEntity {
@@ -23,9 +22,7 @@ public class MemberEntity {
 
     private String name;
 
-    @OneToOne
-    @JoinTable(name = "company",
-            joinColumns = { @JoinColumn(name = "employee_id", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "supervisor_id", referencedColumnName = "id") })
+    @ManyToOne
+    @JoinColumn(name = "supervisor_id")
     private MemberEntity supervisor;
 }
